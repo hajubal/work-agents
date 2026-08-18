@@ -82,7 +82,7 @@ roadmap.md, matrix, inventory ──▶ product-planner ──▶ 2-plan.md (+ma
 - **0-brief.md에는 사람이 최근 고객 요청·영업 이벤트 3줄을 필수로 넣는다.** 폐쇄망 제품이라 이것이 에이전트가 접할 수 있는 유일한 고객 ground truth다.
 - **research 검토 게이트는 평시엔 없다.** 나쁜 조사 위에 planner+critic이 도는 낭비는 몇 달러지만 게이트 하나는 사람 30분+대기 하루다. 파일럿에서만 1→2 사이에 품질 보정용 검토를 1회 넣고 평시엔 제거한다 (critic이 조사 품질 문제를 어차피 잡는다).
 - **재개**: 스킬 시작 시 최신 cycles/ 폴더를 `ls`해서 첫 번째로 없는 파일부터 실행한다. 4-decision.md 부재 = 사람 대기 상태.
-- **주기 실행 판단은 Phase 3으로 미룬다.** 사람 게이트 2개가 있는 한 전체 무인 실행은 대기만 쌓고, 적정 주기는 파일럿 실측 없이 결정 근거가 없다. 선도 후보 메커니즘은 **Claude 루틴(스케줄 클라우드 에이전트)** — 월 1회 repo를 clone해 1~3단계(run-to-gate)만 실행하고 cycles/ 산출물을 PR로 push+알림, 4-decision.md 이후는 사람이 트리거. 전제: private repo의 GitHub 연동, 에이전트·스킬의 develop 머지(Phase 3 완료 후 자연 충족), 상시 brief 파일(무인 실행엔 고객 맥락 3줄 주입자가 없으므로 사람이 평소 유지). 4-decision.md 미결 시 루틴 실행은 no-op — 이 가드는 무인화에서 더 중요해진다.
+- **주기 실행 판단은 Phase 3으로 미룬다.** 사람 게이트 2개가 있는 한 전체 무인 실행은 대기만 쌓고, 적정 주기는 사람 게이트 소요 시간(4-decision.md 말미 한 줄)으로 판단한다. 선도 후보 메커니즘은 **Claude 루틴(스케줄 클라우드 에이전트)** — 월 1회 repo를 clone해 1~3단계(run-to-gate)만 실행하고 cycles/ 산출물을 PR로 push+알림, 4-decision.md 이후는 사람이 트리거. 전제: private repo의 GitHub 연동, 에이전트·스킬의 develop 머지(Phase 3 완료 후 자연 충족), 상시 brief 파일(무인 실행엔 고객 맥락 3줄 주입자가 없으므로 사람이 평소 유지). 4-decision.md 미결 시 루틴 실행은 no-op — 이 가드는 무인화에서 더 중요해진다.
 
 ## 파일 계약 (누가 무엇을 쓰는가)
 
@@ -104,9 +104,9 @@ roadmap.md, matrix, inventory ──▶ product-planner ──▶ 2-plan.md (+ma
 ├── roadmap.md                 # living
 ├── competitor-matrix.md       # living — 회차 누적 핵심 자산
 ├── sgt-feature-inventory.md   # living
-├── cycles/<YYYY-MM[-이름]>/
+├── cycles/<YYYY-MM-DD[-슬러그]>/   # 날짜 접두 필수 — ls 사전순 = 시간순이어야 최신 판정이 성립
 │   ├── 0-brief.md → 1-research-global.md / 1-research-domestic.md
-│   ├── 2-plan.md → 3-critique.md → 4-decision.md(사람) → 9-cost.md
+│   ├── 2-plan.md → 3-critique.md → 4-decision.md(사람)
 │   └── retro.md (파일럿 한정)
 └── issue-drafts/{pending,shipped}/
 ```
@@ -128,7 +128,7 @@ roadmap.md, matrix, inventory ──▶ product-planner ──▶ 2-plan.md (+ma
 
 - **글로벌 6개 고정**: Lakera Guard, Prompt Security(SentinelOne), CalypsoAI, Cisco AI Defense, NeMo Guardrails(OSS 기준선), AWS Bedrock Guardrails(기능 하한선). 6개 제한 이유: 파일럿의 목적은 완전한 지도가 아니라 **프로세스 검증 + 매트릭스 스키마 확정**이다. 나머지는 2회차 이후 증분 추가
 - **국내는 "시드 + 발굴 임무"**: 시드(파수, 지란지교시큐리티, SK쉴더스, 안랩, 이글루코퍼레이션 — researcher가 실재·현황 필수 검증) + 발굴 질문("국내 공공/금융 폐쇄망에 LLM 보안 게이트웨이를 실제 납품한 업체는 누구인가, 나라장터 조달·CC/보안기능확인서 신호는 무엇인가")
-- 산출: cycles/2026-08-pilot/ 전체 + 매트릭스 1차 채움 + 이슈 초안 ≥2건 + 실제 gh 이슈 ≥1건 + 9-cost.md
+- 산출: cycles/2026-08-12-pilot/ 전체 + 매트릭스 1차 채움 + 이슈 초안 ≥2건 + 실제 gh 이슈 ≥1건
 - 판정: [charter.md](charter.md)의 성공 지표 표
 
 ## 변경 이력

@@ -1,4 +1,4 @@
-# 2026-08-pilot 기획안
+# 2026-08-12-pilot 기획안
 
 > 제안 문서다. 결정이 아니다 — red-team-critic 반박 → 사람의 4-decision.md 승인을 거쳐야 로드맵에 들어간다.
 > 근거 표기: `G§Qn` = [1-research-global.md](1-research-global.md) 해당 절, `D§Qn` = [1-research-domestic.md](1-research-domestic.md) 해당 절.

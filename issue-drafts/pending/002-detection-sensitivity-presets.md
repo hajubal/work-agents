@@ -1,6 +1,6 @@
 # feat(admin): 탐지 민감도 프리셋(관대/기본/엄격)
 
-> 기획 사이클: 2026-08-pilot · 2-plan.md 후보 #3 · 승인: 4-decision.md (2026-08-13)
+> 기획 사이클: 2026-08-12-pilot · 2-plan.md 후보 #3 · 승인: 4-decision.md (2026-08-13)
 > 변경 지점이 admin·sgtctl·owasp에 걸친다. Requirements의 `[admin]`/`[ctl]`/`[owasp]` 태그가 2인 분담선이다 — `[owasp]`만 owasp 담당, 나머지는 다른 1인 몫이다.
 
 ## Problem

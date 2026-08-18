@@ -1,6 +1,6 @@
 # feat(owasp): 한국 PII 식별자 유형 커버리지 점검·보강
 
-> 기획 사이클: 2026-08-pilot · 2-plan.md 후보 #2 · 승인: 4-decision.md (2026-08-13)
+> 기획 사이클: 2026-08-12-pilot · 2-plan.md 후보 #2 · 승인: 4-decision.md (2026-08-13)
 
 ## Problem
 

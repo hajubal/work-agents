@@ -8,8 +8,8 @@
 
 | 항목 | 값 |
 |---|---|
-| 현재 Phase | **Phase 2 — 파일럿 사이클 `cycles/2026-08-pilot/` 진행 중. 4-decision.md 작성 완료 → 로드맵 반영·이슈 초안까지 끝, 실제 이슈 생성 대기** |
-| 다음 액션 | 팀 회의([5-meeting-agenda.md](cycles/2026-08-pilot/5-meeting-agenda.md)) → 이슈·코멘트 생성 → Phase 3 회고 |
+| 현재 Phase | **Phase 2 — 파일럿 사이클 `cycles/2026-08-12-pilot/` 진행 중. 4-decision.md 작성 완료 → 로드맵 반영·이슈 초안까지 끝, 실제 이슈 생성 대기** |
+| 다음 액션 | 팀 회의([5-meeting-agenda.md](cycles/2026-08-12-pilot/5-meeting-agenda.md)) → 이슈·코멘트 생성 → Phase 3 회고 |
 | 다음 액션 보조 | pending/ 초안 6건 대기 — 신규 이슈 2건은 생성 가능, 코멘트 4건은 담당자 확인 후 |
 | SGT 저장소 | `~/project/sgt` (GitHub `ininext/sgt`) — 읽기 전용 |
 
@@ -25,7 +25,7 @@
 |---|---|---|---|
 | 0 | 차터+설계 (charter.md, design.md) | 게이트 1: 두 문서 승인 | ✅ 2026-08-12 |
 | 1 | 구현 — 에이전트 4종 + /plan-cycle 스킬 + living doc 초기화 | 게이트 2: 드라이런 확인 | ✅ 2026-08-12 |
-| 2 | 파일럿 1사이클 (cycles/2026-08-pilot/) | 사이클 내 게이트 3~4회 | 🔵 4-decision.md 대기 |
+| 2 | 파일럿 1사이클 (cycles/2026-08-12-pilot/) | 사이클 내 게이트 3~4회 | 🔵 4-decision.md 대기 |
 | 3 | 회고·운영 전환 (retro.md, ops.md) + develop PR | 게이트 3: 운영 여부 결정 | ⚪ |
 
 ## 문서 인덱스
@@ -39,7 +39,7 @@
 | idea-pool.md | 검증 안 된 후보 풀 (구 xlsx 로드맵 — AI 임의 생성 판명으로 강등) | 1 |
 | competitor-matrix.md | 경쟁사 기능 매트릭스 living doc — 회차 누적 핵심 자산 | 1 |
 | sgt-feature-inventory.md | SGT 자체 기능 스냅샷 (매트릭스 SGT 열의 원천) | 1 |
-| cycles/<회차>/ | 회차별 기획 사이클 기록 (brief→research→plan→critique→decision→cost) | 2~ |
+| cycles/<회차>/ | 회차별 기획 사이클 기록 (brief→research→plan→critique→decision) | 2~ |
 | issue-drafts/pending/ | 승인된 기능 후보의 이슈 초안 대기열 | 2~ |
 | issue-drafts/shipped/ | gh 이슈 생성 완료분 (파일 머리에 이슈 번호 기록) | 2~ |
 | ops.md | 운영 주기·게이트 규칙 (파일럿 회고 후 확정) | 3 |

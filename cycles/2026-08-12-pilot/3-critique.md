@@ -1,4 +1,4 @@
-# 2026-08-pilot 비관 검토
+# 2026-08-12-pilot 비관 검토
 
 > 입력: 2-plan.md / 1-research-global.md / 1-research-domestic.md / 0-brief.md / roadmap.md / sgt-feature-inventory.md + `gh issue list --repo ininext/sgt --state open`(41건)
 > 이 문서는 2-plan.md와 나란히 읽히는 반대 심문이다. 동의 항목은 적지 않았다.

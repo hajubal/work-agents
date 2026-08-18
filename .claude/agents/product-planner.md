@@ -32,7 +32,7 @@ model: inherit
 
 | 키 | 필수 | 비고 |
 |---|---|---|
-| `cycle_dir` | ✅ | 사이클 폴더 (예: `cycles/2026-08-pilot`) — 0-brief.md와 1-research-*.md가 여기 있다 |
+| `cycle_dir` | ✅ | 사이클 폴더 (예: `cycles/2026-08-12-pilot`) — 0-brief.md와 1-research-*.md가 여기 있다 |
 | `roadmap_path` | ❌ | 기본 `roadmap.md` (읽기 전용) |
 | `matrix_path` | ❌ | 기본 `competitor-matrix.md` (갱신 대상) |
 | `inventory_path` | ❌ | 기본 `sgt-feature-inventory.md` (읽기 전용 — SGT가 이미 가진 기능을 후보로 제안하는 실수 방지) |
