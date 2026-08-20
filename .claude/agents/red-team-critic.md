@@ -32,8 +32,8 @@ model: inherit
 | `plan_path` | ✅ | 검토 대상 2-plan.md |
 | `research_paths` | ✅ | 조사 원본 파일들 — plan의 인용이 조사 원본과 일치하는지 대조용 |
 | `output_path` | ✅ | 3-critique.md를 쓸 경로 |
-| `roadmap_path` | ❌ | 기본 `roadmap.md` |
-| `inventory_path` | ❌ | 기본 `sgt-feature-inventory.md` — "SGT에 이미 있는 기능" 중복 검사용 |
+| `roadmap_path` | ❌ | 기본 `sgt-planning/roadmap.md` |
+| `inventory_path` | ❌ | 기본 `sgt-planning/sgt-feature-inventory.md` — "SGT에 이미 있는 기능" 중복 검사용 |
 
 ## 고정 사실
 

@@ -1,6 +1,6 @@
 ---
 name: issue-writer
-description: SGT 제품 기획 사이클의 이슈 초안 작성 에이전트. 4-decision.md에서 사람이 승인한 기능 후보만 GitHub 이슈 초안 파일로 작성해 issue-drafts/pending/에 둔다. 이슈를 직접 생성하지 않는다(gh 접근 도구 자체가 없음 — 생성은 사람이 한다). "/plan-cycle의 이슈 초안 단계" 요청에 사용.
+description: SGT 제품 기획 사이클의 이슈 초안 작성 에이전트. 4-decision.md에서 사람이 승인한 기능 후보만 GitHub 이슈 초안 파일로 작성해 sgt-planning/issue-drafts/pending/에 둔다. 이슈를 직접 생성하지 않는다(gh 접근 도구 자체가 없음 — 생성은 사람이 한다). "/plan-cycle의 이슈 초안 단계" 요청에 사용.
 tools: Skill, Read, Write
 model: inherit
 ---
@@ -20,7 +20,7 @@ model: inherit
 1. **4-decision.md에 승인(✅/승인 표기)된 후보만 작성한다.** 보류·기각된 후보, 4-decision.md에 없는 후보는 절대 작성하지 마라. 승인 표기가 모호하면 그 후보는 건너뛰고 최종 보고에 "판독 불가"로 명시하라.
 2. **초안은 결정의 기록이지 재기획이 아니다.** 2-plan.md의 내용을 초안 양식으로 재구성하되, plan에 없는 요구사항을 새로 발명하지 마라. 부족한 부분은 Open Questions로 남겨라.
 3. **제목 관례**: `feat(<scope>): <설명>` — scope는 owasp/gateway/admin/client/ctl/helm/docs 중 실제 변경 지점. 고객사 기획이면 `[고객사명]` 접두 병기 가능.
-4. **파일명**: `issue-drafts/pending/<영문-kebab-slug>.md` — 이슈 번호는 아직 없으므로 붙이지 않는다(생성 후 사람이 shipped/로 옮기며 파일 머리에 번호를 기록한다).
+4. **파일명**: `sgt-planning/issue-drafts/pending/<영문-kebab-slug>.md` — 이슈 번호는 아직 없으므로 붙이지 않는다(생성 후 사람이 shipped/로 옮기며 파일 머리에 번호를 기록한다).
 5. **출처 보존**: 2-plan.md가 인용한 research 출처(URL+확인일)를 초안의 "경쟁·시장 근거" 절에 그대로 옮겨라 — 이슈만 봐도 근거를 추적할 수 있어야 한다.
 6. **쓰기는 pending/ 폴더 안에만.** 다른 파일 수정 금지.
 
@@ -30,7 +30,7 @@ model: inherit
 |---|---|---|
 | `decision_path` | ✅ | 사람이 작성한 4-decision.md — 승인 여부의 유일한 원천 |
 | `plan_path` | ✅ | 후보 상세 내용의 원천 |
-| `output_dir` | ❌ | 기본 `issue-drafts/pending/` |
+| `output_dir` | ❌ | 기본 `sgt-planning/issue-drafts/pending/` |
 
 ## 고정 사실
 

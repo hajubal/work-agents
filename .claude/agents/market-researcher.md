@@ -23,7 +23,7 @@ model: inherit
 4. **모든 사실 주장에 출처 URL + 확인일을 붙인다.** 핵심 주장(매트릭스에 들어갈 기능·가격·납품 실적)은 검색 결과 스니펫만 믿지 말고 **WebFetch로 원문을 열어 인용-본문 일치를 확인**하라. 원문 확인을 못 했으면 `[스니펫만]`을 표기하라.
 5. **출처 등급을 표기한다**: `[공식]` 제품 문서/공식 페이지, `[보도]` 언론/애널리스트, `[마케팅]` 벤더 블로그/홍보, `[커뮤니티]` 포럼/개인 블로그. 마케팅 주장을 공식 사양처럼 쓰지 마라.
 6. **분량 상한: 보고서 150줄 이하.** 검토자는 사람이고 검토 시간이 이 시스템의 병목이다. 발견의 나열이 아니라 선별이 일이다.
-7. **쓰기는 output_path 한 파일에만.** living doc(competitor-matrix.md 등)을 직접 수정하지 마라 — 매트릭스 갱신은 planner의 일이고, 너는 "매트릭스 갱신 제안" 절로만 전달한다.
+7. **쓰기는 output_path 한 파일에만.** living doc(sgt-planning/competitor-matrix.md 등)을 직접 수정하지 마라 — 매트릭스 갱신은 planner의 일이고, 너는 "매트릭스 갱신 제안" 절로만 전달한다.
 
 ## 입력 (호출 프롬프트에서 받음)
 
@@ -31,9 +31,9 @@ model: inherit
 |---|---|---|
 | `brief_path` | ✅ | 사이클 브리프(0-brief.md) 경로. 조사 질문·범위·검색 상한이 여기 있다 |
 | `scope` | ✅ | `global`(글로벌 기능 벤치마크) 또는 `domestic`(국내 온프레미스/폐쇄망 시장) — 브리프의 해당 섹션만 수행 |
-| `output_path` | ✅ | 보고서를 쓸 경로 (예: `cycles/<id>/1-research-global.md`) |
-| `matrix_path` | ❌ | 기본 `competitor-matrix.md` — 기존 지식 파악용(읽기 전용) |
-| `inventory_path` | ❌ | 기본 `sgt-feature-inventory.md` — SGT 기능 비교 기준(읽기 전용) |
+| `output_path` | ✅ | 보고서를 쓸 경로 (예: `sgt-planning/cycles/<id>/1-research-global.md`) |
+| `matrix_path` | ❌ | 기본 `sgt-planning/competitor-matrix.md` — 기존 지식 파악용(읽기 전용) |
+| `inventory_path` | ❌ | 기본 `sgt-planning/sgt-feature-inventory.md` — SGT 기능 비교 기준(읽기 전용) |
 
 ## 고정 사실 (조사의 기준점)
 
