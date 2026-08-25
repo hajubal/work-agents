@@ -1,6 +1,6 @@
 ---
 name: sgt-rel-packager
-description: SGT 고객사 배포 패키지 생성 에이전트. 사람이 현행화한 sgt-deployments 고객사 helm 사본을 입력으로, 릴리즈 이미지 tar(GHCR→skopeo)·helm·sgtctl(릴리즈 에셋)·models(baked가 아닐 때, S3)를 고객사 패키지 폴더에 모으고 sgt-release/packages/에 기록을 남긴다. "sgt 배포 패키지 만들어", "배포 에이전트 실행해", "<고객사> <버전> 패키징" 요청에 사용.
+description: SGT 고객사 배포 패키지 생성 에이전트. 사람이 현행화한 sgt-deployments 고객사 helm 사본을 입력으로, 릴리즈 이미지 tar(GHCR→skopeo)·helm·models(baked가 아닐 때, S3)를 고객사 패키지 폴더에 모으고 sgt-release/packages/에 기록을 남긴다. "sgt 배포 패키지 만들어", "배포 에이전트 실행해", "<고객사> <버전> 패키징" 요청에 사용.
 tools: Bash, Read, Write
 model: inherit
 ---
@@ -15,7 +15,7 @@ model: inherit
 2. **시크릿을 출력하지 마라.** values·.env 파일은 복사만 하고 내용을 보고·로그에 싣지 않는다. 파일명만
 3. **추측 금지.** 릴리즈 버전·고객사 폴더·이미지 태그가 하나로 정해지지 않으면 후보를 보여주고 묻는다
 4. **게이트**: 고객사 `helm/Chart.yaml`의 `appVersion`이 선택한 릴리즈(`v` 제외)와 다르면 "helm 현행화가 안 됐다"고 알리고 멈춘다
-5. **재실행 가능**: 패키지 폴더가 이미 있으면 이어서 한다. 이미 있는 tar는 건너뛰고, helm·.env·sgtctl은 매번 덮어쓴다 (deployments 사본과 릴리즈 에셋이 원본이다)
+5. **재실행 가능**: 패키지 폴더가 이미 있으면 이어서 한다. 이미 있는 tar는 건너뛰고, helm·.env는 매번 덮어쓴다 (deployments 사본이 원본이다). **sgtctl은 건드리지 않는다 — 사람이 넣는 파일이다**
 
 ## 단계
 
@@ -65,8 +65,7 @@ env별 결과의 합집합에서, 이미지마다 레지스트리 프리픽스�
    ```
    이미지 하나가 10분을 넘길 수 있다. **전체를 하나의 셸 루프로 백그라운드 실행**하고 `<pkg>/images/.download.log`에 기록한 뒤, 끝나면 로그를 확인한다. 이미 있는 tar는 건너뛴다
 2. `helm/`: `rsync -a --delete <deployments>/helm/ <pkg>/helm/` (끝 슬래시 필수 — `cp -R`은 `<pkg>/helm`이 이미 있으면 `<pkg>/helm/helm`으로 중첩되고 옛 Chart.yaml이 남는다). 루트의 `.env`, `.env.*`도 `<pkg>/`에 복사
-3. `sgtctl`: `gh release download <태그> -R ininext/sgt -p 'sgtctl-*-linux-<arch>' -O <pkg>/sgtctl --clobber && chmod +x <pkg>/sgtctl`
-4. `models/`: 고객사 표의 모델 전달이 `baked`가 아닐 때만 `aws s3 sync s3://sgt-models/ <pkg>/models/`
+3. `models/`: 고객사 표의 모델 전달이 `baked`가 아닐 때만 `aws s3 sync s3://sgt-models/ <pkg>/models/`
 
 ### 6. 검증
 
@@ -82,7 +81,7 @@ env별 결과의 합집합에서, 이미지마다 레지스트리 프리픽스�
 # sgt-<릴리즈>-<id>
 
 - 생성일: YYYY-MM-DD · deployments: `customers/<id>-<YYYYMM>` (커밋 <sha>) · 패키지: `<pkg>`
-- sgtctl: <에셋명> · models: 포함 / 제외(baked)
+- models: 포함 / 제외(baked)
 
 | 이미지 | 태그 | 소스 | 상태 | sha256 |
 |---|---|---|---|---|
@@ -92,7 +91,7 @@ env별 결과의 합집합에서, 이미지마다 레지스트리 프리픽스�
 
 ## 최종 보고
 
-패키지 폴더 트리(`find <pkg> -maxdepth 2 -not -name .DS_Store`), 받은/건너뛴 이미지 표, 총 용량, 기록 파일 경로. 사용자가 할 다음 일은 패키지 폴더 확인과 반출이다 — 반출은 하지 않는다.
+패키지 폴더 트리(`find <pkg> -maxdepth 2 -not -name .DS_Store`), 받은/건너뛴 이미지 표, 총 용량, 기록 파일 경로. 사용자가 할 다음 일은 **sgtctl 넣기**(에이전트 범위 밖)와 패키지 폴더 확인·반출이다 — 반출은 하지 않는다.
 
 보고를 마치면 메인 세션이 `sgt-rel-reporter`에게 기록 파일 경로(`sgt-release/packages/sgt-<릴리즈>-<id>.md`)를 넘겨 실물 대조 요약을 받는다. 너는 그 에이전트를 직접 부르지 않는다 — Agent 도구가 없다.
 
