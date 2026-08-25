@@ -2,7 +2,7 @@
 
 이 폴더는 **SGT 고객사 배포 패키지 에이전트**의 작업 공간이다. 실행 주체는 루트 `.claude/agents/sgt-rel-packager.md` 하나다. **경로는 저장소 루트 기준**이며, 이 폴더 파일은 `sgt-release/` 접두어로 가리킨다.
 
-무엇을 하나: 사람이 현행화한 고객사 helm 사본을 입력으로, 배포에 필요한 이미지 tar·helm·sgtctl·(필요 시) models를 **저장소 밖 패키지 폴더** 한 곳에 모은다. 사람은 그 폴더를 확인하고 반출한다.
+무엇을 하나: 사람이 현행화한 고객사 helm 사본을 입력으로, 배포에 필요한 이미지 tar·helm·(필요 시) models를 **저장소 밖 패키지 폴더** 한 곳에 모은다. 사람은 그 폴더를 확인하고 반출한다.
 
 ## 외부 저장소 참조 규약 ⚠️
 
@@ -14,7 +14,7 @@
 | 모델 | `s3://sgt-models/` | 읽기 전용 |
 | 패키지 출력 | 아래 고객사 표의 베이스 경로 (저장소 밖) | **쓰기는 여기와 `sgt-release/packages/`뿐** |
 
-- `~/project/sgt` 작업 트리는 기준이 아니다. 버전·sgtctl·차트는 전부 **릴리즈**에서 가져온다. 작업 트리는 미릴리즈 상태일 수 있다(sgt-ctl/VERSION 1.8.0 vs 릴리즈 에셋 1.7.0)
+- `~/project/sgt` 작업 트리는 기준이 아니다. 버전·차트는 전부 **릴리즈**에서 가져온다. 작업 트리는 미릴리즈 상태일 수 있다(sgt-ctl/VERSION 1.8.0 vs 릴리즈 에셋 1.7.0)
 - sgt-deployments의 values에는 라이선스·JWT 시크릿이 들어 있다. 에이전트 보고에 **파일 내용을 싣지 않는다** — 파일명만
 - `gh` 명령은 cwd가 이 저장소이므로 `-R ininext/sgt`가 반드시 붙는다
 
@@ -39,7 +39,7 @@ sgt-<릴리즈>-<id>/
 │   └── SHA256SUMS
 ├── helm/                        # deployments 폴더의 helm/ 그대로
 ├── .env, .env.<env>             # deployments 폴더 루트의 sgtctl 컨텍스트 그대로
-├── sgtctl                       # 릴리즈 에셋 sgtctl-<ver>-linux-<arch>
+├── sgtctl                       # 릴리즈 에셋 sgtctl-<ver>-linux-<arch> — **사람이 넣는다(에이전트 범위 밖)**
 └── models/                      # 모델 전달이 baked가 아닐 때만
 ```
 
@@ -65,7 +65,7 @@ sgt-<릴리즈>-<id>/
 7. 위 고객사 표에 한 줄 추가
 8. 커밋·PR (`[<id>] <릴리즈> install`)
 
-sgtctl 빌드·이미지 export·models 복사는 사람이 하지 않는다 — 에이전트가 릴리즈 에셋·GHCR·S3에서 가져온다.
+이미지 export·models 복사는 사람이 하지 않는다 — 에이전트가 GHCR·S3에서 가져온다. **sgtctl은 사람 몫이다**(아래 "에이전트 실행 후").
 
 ### 업데이트마다 — 에이전트 호출 전
 
@@ -74,6 +74,14 @@ sgtctl 빌드·이미지 export·models 복사는 사람이 하지 않는다 —
 3. `scripts/render-smoke.sh`로 렌더 확인, 커밋
 
 그다음 "sgt 배포 패키지 만들어"로 에이전트를 부른다.
+
+### 에이전트 실행 후 — sgtctl 넣기
+
+에이전트가 만든 패키지 폴더 루트에 릴리즈 에셋 sgtctl을 사람이 넣는다. 반출 전 마지막 단계다.
+
+```bash
+gh release download <태그> -R ininext/sgt -p 'sgtctl-*-linux-<arch>' -O <pkg>/sgtctl --clobber && chmod +x <pkg>/sgtctl
+```
 
 ## 자주 쓰는 명령
 
