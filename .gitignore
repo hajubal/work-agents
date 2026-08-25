@@ -2,3 +2,6 @@
 _workspace/
 
 .DS_Store
+
+# 토큰 (sgt-release/.env 등)
+.env

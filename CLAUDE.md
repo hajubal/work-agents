@@ -7,7 +7,7 @@
 | 폴더 | 에이전트 | 무엇을 하나 | 진입점 |
 |---|---|---|---|
 | [sgt-planning/](sgt-planning/) | SGT 기획 에이전트 4종 | 시장조사 → 기획 종합 → 비관 검토 → 이슈 초안 | `/plan-cycle` |
-| [sgt-release/](sgt-release/) | SGT 배포 패키징 에이전트 | (기획 중) | — |
+| [sgt-release/](sgt-release/) | SGT 배포 패키지 에이전트 1종 | 고객사 배포 패키지 생성 (이미지 tar·helm·sgtctl·models) | "sgt 배포 패키지 만들어" (`sgt-rel-packager`) |
 
 작업 요청이 어느 폴더에 속하는지 먼저 판단하고, **그 폴더의 `CLAUDE.md`를 읽은 뒤** 시작한다. 도메인 규칙(SGT 저장소 참조 규약 등)은 전부 거기 있다.
 

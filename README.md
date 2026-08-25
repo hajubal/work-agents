@@ -5,7 +5,7 @@
 | 에이전트 | 폴더 | 상태 | 진입점 |
 |---|---|---|---|
 | SGT 기획 에이전트 | [sgt-planning/](sgt-planning/README.md) | 🔵 파일럿 사이클 진행 중 | `/plan-cycle` |
-| SGT 배포 패키징 에이전트 | [sgt-release/](sgt-release/README.md) | ⚪ 기획 중 | — |
+| SGT 배포 패키지 에이전트 | [sgt-release/](sgt-release/README.md) | 🟡 정의 완료 · 첫 실행 전 | "sgt 배포 패키지 만들어" |
 
 각 에이전트의 현재 상태는 그 폴더의 README에 있다. 여기에 중복 기록하지 않는다.
 

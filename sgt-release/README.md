@@ -1,5 +1,18 @@
-# SGT 배포 패키징 에이전트
+# SGT 배포 패키지 에이전트
 
-⚪ **기획 중** — 아직 에이전트 정의도 파일 계약도 없다.
+🟡 **정의 완료 · 첫 실행 전** — 에이전트 `sgt-rel-packager` 1종. 규칙·고객사 표·사람 체크리스트는 [CLAUDE.md](CLAUDE.md).
 
-SGT(`~/project/sgt` · GitHub `ininext/sgt`)의 배포 패키징을 보조할 에이전트 자리다. 무엇을 자동화할지 정해지면 여기에 `CLAUDE.md`(도메인 규칙)와 산출물 폴더를 만들고, 에이전트 정의는 루트 `.claude/agents/`에 둔다.
+사람이 `~/project/sgt-deployments`의 고객사 helm 사본을 릴리즈에 맞춰 현행화하면, 에이전트가 이미지 tar(GHCR→skopeo)·helm·sgtctl(릴리즈 에셋)·models(baked가 아닐 때, S3)를 고객사 패키지 폴더(저장소 밖)에 모은다. 기록은 `packages/sgt-<릴리즈>-<id>.md` — `ls packages/`가 곧 이력이다.
+
+## 실행
+
+```
+sgt 배포 패키지 만들어      # 고객사·릴리즈를 물어보고 진행
+hmsec 3.2.0 패키징해
+```
+
+## 이 장비 준비물
+
+- `brew install skopeo`
+- `sgt-release/.env`에 `GH_TOKEN=<read:packages 권한 토큰>` (gitignore 대상)
+- `gh`·`helm`·`aws` 로그인 상태
