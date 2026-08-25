@@ -15,7 +15,7 @@ model: inherit
 2. **시크릿을 출력하지 마라.** values·.env 파일은 복사만 하고 내용을 보고·로그에 싣지 않는다. 파일명만
 3. **추측 금지.** 릴리즈 버전·고객사 폴더·이미지 태그가 하나로 정해지지 않으면 후보를 보여주고 묻는다
 4. **게이트**: 고객사 `helm/Chart.yaml`의 `appVersion`이 선택한 릴리즈(`v` 제외)와 다르면 "helm 현행화가 안 됐다"고 알리고 멈춘다
-5. **재실행 가능**: 이미 있는 tar·파일은 건너뛴다. 패키지 폴더가 이미 있으면 이어서 한다
+5. **재실행 가능**: 패키지 폴더가 이미 있으면 이어서 한다. 이미 있는 tar는 건너뛰고, helm·.env·sgtctl은 매번 덮어쓴다 (deployments 사본과 릴리즈 에셋이 원본이다)
 
 ## 단계
 
@@ -24,7 +24,7 @@ model: inherit
 | 항목 | 기본값 산출 |
 |---|---|
 | 고객사 | `sgt-release/CLAUDE.md` 고객사 표에서. 표에 없으면 사용자에게 한 줄 추가를 요청하고 멈춘다 |
-| 릴리즈 | `gh release list -R ininext/sgt --limit 1`의 최신. 사용자가 다른 버전을 말하면 `gh release view <tag> -R ininext/sgt`로 존재 확인 |
+| 릴리즈 | `gh release list -R ininext/sgt --limit 1`의 최신 태그. 사용자가 `3.2.0`처럼 `v` 없이 말해도 태그는 `v3.2.0`으로 정규화해 `gh release view <태그> -R ininext/sgt`로 존재 확인. 이후 **gh 조회·다운로드는 `<태그>`(v 포함)**, appVersion 비교·패키지 폴더명은 `<릴리즈>`(v 제외) |
 | deployments 폴더 | `~/project/sgt-deployments/customers/<id>-*` 중 YYYYMM 최신 |
 | 패키지 폴더 | `<베이스 경로>/sgt-<릴리즈>-<id>` |
 | env 목록 | deployments 폴더 루트의 `.env.<env>` 파일들 |
@@ -51,7 +51,7 @@ env별 결과의 합집합에서, 이미지마다 레지스트리 프리픽스�
 
 ### 4. 전달 대상 결정
 
-같은 베이스 경로의 이전 패키지(`sgt-*-<id>/images/*.tar`)와 `sgt-release/packages/` 기록에 있는 `<이미지명>-<태그>.tar`는 **이미 전달된 것**이다. 기본은 새 태그만 받는다. 사용자가 "전부"라고 하면 전부 받는다. 결정 전에 표로 보여준다: 이미지 · 태그 · 소스 · 신규/기전달.
+**전달 이력은 `sgt-release/packages/*.md` 기록뿐이다.** 기록에 있는 `<이미지명>-<태그>.tar`는 이미 전달된 것으로 보고, 기본은 새 태그만 받는다. 기록 없는 패키지 폴더(에이전트 이전 수작업, 실패로 중단된 실행)의 tar는 전달 이력이 **아니다** — 현재 패키지 폴더에 이미 있는 tar는 다운로드를 건너뛰는 재개 캐시일 뿐이고, 기록에는 신규로 적는다. 사용자가 "전부"라고 하면 전부 받는다. 결정 전에 표로 보여준다: 이미지 · 태그 · 소스 · 신규/기전달.
 
 ### 5. 패키징
 
@@ -64,8 +64,8 @@ env별 결과의 합집합에서, 이미지마다 레지스트리 프리픽스�
    skopeo copy --override-os linux --override-arch <arch> docker://<소스> oci-archive:<pkg>/images/<이미지명>-<태그>.tar
    ```
    이미지 하나가 10분을 넘길 수 있다. **전체를 하나의 셸 루프로 백그라운드 실행**하고 `<pkg>/images/.download.log`에 기록한 뒤, 끝나면 로그를 확인한다. 이미 있는 tar는 건너뛴다
-2. `helm/`: `cp -R <deployments>/helm <pkg>/helm`. 루트의 `.env`, `.env.*`도 `<pkg>/`에 복사
-3. `sgtctl`: `gh release download <릴리즈> -R ininext/sgt -p 'sgtctl-*-linux-<arch>' -O <pkg>/sgtctl && chmod +x <pkg>/sgtctl`
+2. `helm/`: `rsync -a --delete <deployments>/helm/ <pkg>/helm/` (끝 슬래시 필수 — `cp -R`은 `<pkg>/helm`이 이미 있으면 `<pkg>/helm/helm`으로 중첩되고 옛 Chart.yaml이 남는다). 루트의 `.env`, `.env.*`도 `<pkg>/`에 복사
+3. `sgtctl`: `gh release download <태그> -R ininext/sgt -p 'sgtctl-*-linux-<arch>' -O <pkg>/sgtctl --clobber && chmod +x <pkg>/sgtctl`
 4. `models/`: 고객사 표의 모델 전달이 `baked`가 아닐 때만 `aws s3 sync s3://sgt-models/ <pkg>/models/`
 
 ### 6. 검증
